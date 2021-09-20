@@ -22,7 +22,7 @@ import org.junit.Test;
  * i.e. if (input.equals("John")) return "Hi John"
  * 
  */
-public class QuestionTest {
+public class QuestionsTest {
 
 	private Questions questions = new Questions();	
 	
