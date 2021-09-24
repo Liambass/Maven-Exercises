@@ -1,9 +1,14 @@
 package com.qa.calcscanner;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,6 +23,9 @@ public class CalcMenuTest {
 	// Consider the different possibilities in the 'switch/case'
 	// Control output from the input class with Mockito
 
+	
+	private final static ByteArrayOutputStream out = new ByteArrayOutputStream();
+	
 	// First mock dependency
 	@Mock
 	private Input input;
@@ -31,11 +39,17 @@ public class CalcMenuTest {
 	private CalcMenu menu;
 	
 	// Write tests here
+	@BeforeClass
+	public static void setUpStreams() {
+	    System.setOut(new PrintStream(out));
+	}
+	
 	@Test
 	public void testMenu1() {
 		Mockito.when(input.getString()).thenReturn("1", "0");
 		Mockito.when(input.getInt()).thenReturn(1, 5);
 		menu.menu();
+		assertTrue(out.toString().contains("Your answer is: "));
 		verify(calc, times(1)).add(1, 5);
 	}
 	
